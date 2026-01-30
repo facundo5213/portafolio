@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Portafolio de proyectos de sistemas" />
+  <title>Portafolio — Proyectos</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#111a33;
+      --muted:#9fb0d0;
+      --text:#e9efff;
+      --accent:#7c5cff;
+      --accent2:#24d3ee;
+      --border:rgba(255,255,255,.10);
+      --shadow:0 14px 40px rgba(0,0,0,.35);
+      --radius:18px;
+      --max:1080px;
+    }
+    *{box-sizing:border-box}
+    html,body{min-height:100%}
+    html{background:#070a14}
+    body{
+      margin:0;
+      min-height:100vh;
+      min-height:100dvh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(124,92,255,.35), transparent 55%),
+        radial-gradient(700px 500px at 85% 25%, rgba(36,211,238,.25), transparent 55%),
+        linear-gradient(180deg, #070a14 0%, var(--bg) 40%, #070a14 100%);
+      line-height:1.5;
+    }
+    a{color:inherit; text-decoration:none}
+    a:hover{opacity:.95}
+
+    /* Layout */
+    .wrap{max-width:var(--max); margin:0 auto; padding:26px 20px 56px}
+    header{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,20,.65);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:14px; row-gap:10px; flex-wrap:wrap; padding:14px 20px; max-width:var(--max); margin:0 auto}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
+    .dot{width:10px; height:10px; border-radius:999px; background:linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow:0 0 0 3px rgba(124,92,255,.15)}
+    .links{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .pill{padding:8px 12px; border:1px solid var(--border); border-radius:999px; color:var(--muted); font-weight:700; font-size:13px}
+    .pill:hover{border-color: rgba(124,92,255,.38); color:var(--text)}
+
+    /* Cards */
+    .card{background:rgba(17,26,51,.72); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); min-width:0}
+    .glow{position:relative; overflow:hidden}
+    .glow:before{
+      content:""; position:absolute; inset:-2px;
+      background: conic-gradient(from 180deg, rgba(124,92,255,.00), rgba(124,92,255,.40), rgba(36,211,238,.35), rgba(124,92,255,.00));
+      filter: blur(16px);
+      opacity:.55;
+      transform: translate3d(0,0,0);
+      pointer-events:none;
+      animation: spin 9s linear infinite;
+    }
+    .glow > *{position:relative}
+    @keyframes spin{to{transform: rotate(360deg)}}
+
+    /* Hero */
+    .hero{padding:26px 0 14px}
+    .heroGrid{display:grid; grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr); gap:16px; align-items:stretch}
+    .heroMain{padding:22px}
+    .kicker{display:inline-flex; gap:10px; row-gap:6px; flex-wrap:wrap; align-items:center; padding:6px 10px; border:1px solid var(--border); border-radius:999px; color:var(--muted); font-weight:700; font-size:13px}
+    .kicker b{color:var(--text)}
+    h1{margin:14px 0 8px; font-size:44px; line-height:1.08; letter-spacing:-.7px}
+    .sub{margin:0; color:var(--muted); font-size:15px; max-width:68ch}
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:11px 14px; border-radius:12px; font-weight:800; font-size:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      transform: translateY(0);
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .btnPrimary{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: rgba(255,255,255,.0);
+      color:#06101b;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.20)}
+
+    .side{padding:16px}
+    .sideTop{display:grid; gap:10px; margin-bottom:12px}
+    .metaLine{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; row-gap:10px; flex-wrap:wrap; padding:12px; border:1px solid var(--border); border-radius:16px; background: rgba(0,0,0,.15)}
+    .metaLine .label{color:var(--muted); font-size:12px; font-weight:800; letter-spacing:.2px; text-transform:uppercase}
+    .metaLine .value{font-weight:900}
+    .metaLine > div{flex:1 1 220px; min-width:0}
+
+    /* Tech ticker */
+    .ticker{border:1px solid var(--border); border-radius:16px; background:rgba(0,0,0,.12); overflow:hidden; position:relative}
+    .ticker:after{content:""; position:absolute; inset:0; pointer-events:none; background: linear-gradient(90deg, rgba(7,10,20,.95), transparent 20%, transparent 80%, rgba(7,10,20,.95));}
+    .track{display:flex; gap:10px; width:max-content; padding:10px; animation: marquee 18s linear infinite}
+    .ticker:hover .track{animation-play-state: paused}
+    @keyframes marquee{from{transform: translateX(0)} to{transform: translateX(-50%)}}
+
+    /* Sections */
+    section{margin-top:24px}
+    .sectionTitle{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:0 0 10px}
+    .sectionTitle h2{margin:0; font-size:18px; letter-spacing:.2px}
+    .sectionTitle p{margin:0; color:var(--muted); font-size:14px}
+
+    /* Tags */
+    .tags{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 0}
+    .tag{font-size:12px; font-weight:900; color:rgba(233,239,255,.92); border:1px solid var(--border); padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.04)}
+    .tag.live{position:relative; isolation:isolate}
+    .tag.live:before{
+      content:""; position:absolute; inset:-1px; border-radius:999px;
+      background: linear-gradient(135deg, rgba(124,92,255,.35), rgba(36,211,238,.28));
+      filter: blur(10px);
+      opacity:.0;
+      z-index:-1;
+      transition: opacity .18s ease;
+    }
+    .tag.live:hover:before{opacity:.9}
+
+    /* Projects */
+    .projects{display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:14px}
+    .proj{padding:16px; position:relative; overflow:hidden; transform: translateY(0); transition: transform .18s ease, border-color .18s ease}
+    .proj:hover{transform: translateY(-2px); border-color: rgba(36,211,238,.30)}
+    .proj .kicker{font-size:12px}
+    .proj h3{margin:10px 0 6px; font-size:16px}
+    .proj p{margin:0 0 10px; color:var(--muted); font-size:14px}
+    .labelRow{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; row-gap:6px; margin-top:10px; color:rgba(233,239,255,.92); font-weight:900; font-size:12px; letter-spacing:.2px; text-transform:uppercase}
+    .labelRow span{color:var(--muted); font-weight:800; text-transform:none; letter-spacing:0; flex:1 1 260px; min-width:0}
+    ul{margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:14px}
+    li{margin:6px 0}
+
+    .techCloud{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .chip{
+      font-size:12px; font-weight:900;
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding:6px 10px;
+      background: rgba(0,0,0,.14);
+      color: rgba(233,239,255,.92);
+      animation: floaty 3.4s ease-in-out infinite;
+      animation-delay: var(--d, 0s);
+    }
+    @keyframes floaty{
+      0%,100%{transform: translateY(0)}
+      50%{transform: translateY(-4px)}
+    }
+
+    /* Details */
+    details{margin-top:10px; border:1px solid var(--border); border-radius:16px; background: rgba(0,0,0,.12); overflow:hidden}
+    summary{cursor:pointer; list-style:none; padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px; font-weight:900; color:rgba(233,239,255,.92)}
+    summary::-webkit-details-marker{display:none}
+    .caret{display:inline-block; transition: transform .15s ease; color:var(--muted)}
+    details[open] .caret{transform: rotate(180deg)}
+    .detailBody{padding:0 12px 12px}
+    .detailBody p{margin:8px 0 0; color:var(--muted); font-size:14px}
+
+    /* Tech section */
+    .twoCol{display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:14px}
+    .box{padding:16px}
+
+    /* Contact */
+    .contactGrid{display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:14px}
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important}
+      .track, .chip, .glow:before{animation: none !important}
+      .btn, .proj, .caret{transition: none !important}
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px){
+      .heroGrid{grid-template-columns: 1fr}
+      h1{font-size:36px}
+      .projects{grid-template-columns: 1fr}
+      .twoCol{grid-template-columns: 1fr}
+      .contactGrid{grid-template-columns: 1fr}
+      header{position:static}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <span data-bind="name">Tu Nombre</span>
+      </div>
+      <div class="links">
+        <a class="pill" href="#proyectos">Proyectos</a>
+        <a class="pill" href="#tecnologias">Tecnologías</a>
+        <a class="pill" href="#contacto">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="inicio">
+      <div class="heroGrid">
+        <div class="card glow heroMain">
+          <div class="kicker">🧩 <b data-bind="role">Desarrollador/a de Sistemas</b> • <span data-bind="focus">Backend / Full‑stack</span></div>
+          <h1><span data-bind="headline">Proyectos de sistemas</span> que resuelven problemas reales.</h1>
+          <p class="sub" data-bind="summary">Portafolio para postulación. Enfoque fuerte en objetivos, arquitectura, calidad y despliegue. Abajo tenés 3 proyectos.</p>
+          <div class="ctaRow">
+            <a class="btn btnPrimary" data-bind="mailto" href="mailto:facutba2003@gmail.com">Contactarme</a>
+            <a class="btn" href="#proyectos">Ver proyectos</a>
+            <a class="btn" data-bind="cv" href="#" title="Reemplazá con tu URL">CV (PDF)</a>
+          </div>
+        </div>
+
+        <aside class="card side" aria-label="Resumen">
+          <div class="sideTop">
+            <div class="metaLine">
+              <div>
+                <div class="label">Nombre</div>
+                <div class="value" data-bind="name">Tu Nombre</div>
+              </div>
+              <div style="text-align:right">
+                <div class="label">Ubicación</div>
+                <div class="value" data-bind="location">Buenos Aires, San Martin</div>
+              </div>
+            </div>
+
+            <div class="metaLine">
+              <div>
+                <div class="label">Stack</div>
+                <div class="value" data-bind="stack">Python • C# • HTML • CSS • SQL Server • MongoDB</div>
+              </div>
+              <div style="text-align:right">
+                <div class="label">Prioridad</div>
+                <div class="value" data-bind="priority">Calidad • Mantenibilidad</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ticker" aria-label="Tecnologías usadas">
+            <div class="track" id="techTrack">
+              <span class="tag live">Python</span>
+              <span class="tag live">C#</span>
+              <span class="tag live">HTML</span>
+              <span class="tag live">CSS</span>
+              <span class="tag live">SQL Server</span>
+              <span class="tag live">MongoDB</span>
+              <span class="tag live">WinForms</span>
+              <span class="tag live">Entity Framework</span>
+              <span class="tag live">Arquitectura en capas</span>
+              <span class="tag live">Factory</span>
+              <span class="tag live">Composite</span>
+              <span class="tag live">RBAC</span>
+              <span class="tag live">PPTX</span>
+            </div>
+          </div>
+
+          <div class="ctaRow" style="margin-top:12px">
+            <a class="btn" data-bind="linkedin" href="https://www.linkedin.com/in/facundo-beduino">LinkedIn</a>
+            <a class="btn" data-bind="github" href="https://github.com/facundo5213">GitHub</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="proyectos">
+      <div class="sectionTitle">
+        <h2>Proyectos</h2>
+        <p>Objetivo + tecnologías + aporte.</p>
+      </div>
+
+      <div class="projects">
+        <!-- PROYECTO 1 -->
+        <article class="card proj">
+          <div class="kicker">🍽️ Sistema • <b>Restaurante</b></div>
+          <h3 data-proj-title="p1">Sistema integral de gestión para restaurante</h3>
+          <p data-proj-desc="p1">Sistema completo para optimizar la operación del restaurante: reservas, pedidos, cocina, facturación, compras, inventario y configuración de salas/mesas.</p>
+
+          <div class="labelRow">Objetivo <span data-proj-goal="p1">Optimizar procesos operativos y mejorar la experiencia del cliente con control en tiempo real y trazabilidad.</span></div>
+
+          <div class="labelRow">Tecnologías <span>(arquitectura + patrones)</span></div>
+          <div class="techCloud" aria-label="Tech proyecto 1">
+            <span class="chip" style="--d:.0s">C#</span>
+            <span class="chip" style="--d:.2s">SQL Server</span>
+            <span class="chip" style="--d:.4s">Entity Framework</span>
+            <span class="chip" style="--d:.6s">Arquitectura en capas</span>
+            <span class="chip" style="--d:.8s">Factory / Composite</span>
+          </div>
+
+          <details>
+            <summary>Qué incluye / mi aporte <span class="caret">▾</span></summary>
+            <div class="detailBody">
+              <p><b>Funcionalidades clave:</b></p>
+              <ul>
+                <li><b>Reservas</b> en tiempo real: alta/modificación/control.</li>
+                <li><b>Pedidos</b> integrados a cocina y <b>facturación</b>.</li>
+                <li><b>Compras</b>: órdenes de compra + solicitudes de cotización + proveedores.</li>
+                <li><b>Plano visual</b> del restaurante: diseño de mesas/secciones.</li>
+                <li><b>Gestión de mesas</b>: disponibilidad/ocupación por sala.</li>
+                <li><b>Platos & materia prima</b>: ABM + relación insumos↔platos.</li>
+                <li><b>Inventario</b>: BOM automatizado para descuentos/incrementos por sucursal.</li>
+                <li><b>Multilenguaje</b> + <b>Backup/Restore</b> integrado.</li>
+              </ul>
+              <p><b>Prácticas:</b> patrones de diseño (Factory, Composite), ORM con Entity Framework y arquitectura en capas para mantenibilidad.</p>
+              <p><b>Documentación:</b> manual de usuario + manual de programador y modelado completo en <b>Enterprise Architect</b> (UML: casos de uso, clases, secuencia y despliegue).</p>
+            </div>
+          </details>
+        </article>
+
+        <!-- PROYECTO 2 -->
+        <article class="card proj">
+          <div class="kicker">🏦 Sistema • <b>Comisiones & cargos</b></div>
+          <h3 data-proj-title="p2">Workflow de comisiones y cargos (Banco Nación)</h3>
+          <p data-proj-desc="p2">Aplicación interna para gestionar altas/actualizaciones de comisiones y cargos a partir de una presentación al comité: plantilla PPT, carga del PPT, validación por roles y publicación asistida.</p>
+
+          <div class="labelRow">Objetivo <span data-proj-goal="p2">Estandarizar el proceso del comité y reducir errores/retrabajo, con control Operador/Verificador y salida lista para publicar.</span></div>
+
+          <div class="labelRow">Tecnologías <span>(desktop + datos + flujo)</span></div>
+          <div class="techCloud" aria-label="Tech proyecto 2">
+            <span class="chip" style="--d:.0s">C#</span>
+            <span class="chip" style="--d:.2s">WinForms</span>
+            <span class="chip" style="--d:.4s">SQL Server</span>
+            <span class="chip" style="--d:.6s">Roles (RBAC)</span>
+            <span class="chip" style="--d:.8s">PPTX</span>
+          </div>
+
+          <details>
+            <summary>Cómo funciona (end‑to‑end) <span class="caret">▾</span></summary>
+            <div class="detailBody">
+              <ul>
+                <li><b>Operador</b> descarga una <b>plantilla PPT</b> desde el sistema.</li>
+                <li><b>Sube el PPT</b> al sistema y se <b>importan automáticamente</b> las nuevas comisiones y cargos (con validaciones).</li>
+                <li>Pasa a <b>Verificador</b> para <b>aprobar o rechazar</b>.</li>
+                <li>Si aprueba, se habilita la <b>publicación</b> y el sistema genera <b>borradores de email</b> listos para enviar a <b>web</b> e <b>intranet</b>.</li>
+              </ul>
+              <p><b>Roles:</b> Operador y Verificador.</p>
+            </div>
+          </details>
+        </article>
+
+        <!-- PROYECTO 3 -->
+        <article class="card proj">
+          <div class="kicker">🧾 Sistema • <b>Facturación</b></div>
+          <h3 data-proj-title="p3">API de Facturación y Reportes</h3>
+          <p data-proj-desc="p3">Servicio backend para emitir comprobantes, consolidar ventas y exportar reportes para BI.</p>
+
+          <div class="labelRow">Objetivo <span data-proj-goal="p3">Asegurar emisión confiable y reportes consistentes para decisiones de negocio.</span></div>
+
+          <div class="labelRow">Tecnologías <span>(chips flotantes)</span></div>
+          <div class="techCloud" aria-label="Tech proyecto 3">
+            <span class="chip" style="--d:.0s">Python</span>
+            <span class="chip" style="--d:.2s">FastAPI</span>
+            <span class="chip" style="--d:.4s">JWT</span>
+            <span class="chip" style="--d:.6s">Rate limit</span>
+            <span class="chip" style="--d:.8s">ETL</span>
+          </div>
+
+          <details>
+            <summary>Qué hice / impacto <span class="caret">▾</span></summary>
+            <div class="detailBody">
+              <p><b>Aporte:</b> endpoints versionados + validación estricta, batch de cierres diarios/conciliación, seguridad por scopes y rate limit por cliente.</p>
+            </div>
+          </details>
+        </article>
+      </div>
+    </section>
+
+    <section id="tecnologias">
+      <div class="sectionTitle">
+        <h2>Tecnologías</h2>
+        <p>Vista rápida.</p>
+      </div>
+
+      <div class="twoCol">
+        <div class="card box">
+          <div class="kicker">🧰 Tecnologías</div>
+          <div class="tags" style="margin-top:10px">
+            <span class="tag live">Python</span>
+            <span class="tag live">C#</span>
+            <span class="tag live">WinForms</span>
+            <span class="tag live">HTML</span>
+            <span class="tag live">CSS</span>
+            <span class="tag live">SQL Server</span>
+            <span class="tag live">MongoDB</span>
+            <span class="tag live">Entity Framework</span>
+            <span class="tag live">PPTX</span>
+            <span class="tag live">Enterprise Architect (UML)</span>
+          </div>
+          <p class="sub" style="margin-top:10px">Stack completo que uso en proyectos: desktop, backend, datos, documentación y modelado.</p>
+        </div>
+
+        <div class="card box">
+          <div class="kicker">🔐 Gestión de Accesos</div>
+          <div class="tags" style="margin-top:10px">
+            <span class="tag live">RBAC</span>
+            <span class="tag live">Operador</span>
+            <span class="tag live">Verificador</span>
+            <span class="tag live">Permisos</span>
+            <span class="tag live">Aprobación</span>
+            <span class="tag live">Trazabilidad</span>
+          </div>
+          <p class="sub" style="margin-top:10px">Control por roles y flujo de aprobación para reducir errores y asegurar cambios validados.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="sectionTitle">
+        <h2>Contacto</h2>
+        <p>Links directos para que te escriban rápido.</p>
+      </div>
+
+      <div class="contactGrid">
+        <div class="card box">
+          <div class="kicker">📨 Datos</div>
+          <ul>
+            <li><b>Email:</b> <span data-bind="email">facutba2003@gmail.com</span></li>
+            <li><b>LinkedIn:</b> <span data-bind="linkedinText">www.linkedin.com/in/facundo-beduino</span></li>
+            <li><b>GitHub:</b> <span data-bind="githubText">github.com/facundo5213</span></li>
+            <li><b>Ubicación:</b> <span data-bind="location">Buenos Aires, San Martin</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ==========================
+    // EDITÁ ESTE OBJETO Y LISTO
+    // ==========================
+    const PROFILE = {
+      name: "Facundo Beduino",
+      role: "Desarrollador de Sistemas",
+      focus: "Backend / Full-stack",
+      location: "Buenos Aires, San Martin",
+      headline: "Proyectos de sistemas",
+      summary: "Portafolio para postulación. Enfoque fuerte en objetivos, arquitectura, calidad y despliegue. Abajo tenés 3 proyectos.",
+      stack: "Python • C# • HTML • CSS • SQL Server • MongoDB",
+      priority: "Calidad • Mantenibilidad",
+      email: "facutba2003@gmail.com",
+      linkedin: "https://www.linkedin.com/in/facundo-beduino",
+      linkedinText: "www.linkedin.com/in/facundo-beduino",
+      github: "https://github.com/facundo5213",
+      githubText: "github.com/facundo5213",
+      cv: "#"
+    };
+
+    const PROJECTS = {
+      p1: {
+        title: "Sistema integral de gestión para restaurante",
+        desc: "Sistema completo para optimizar la operación del restaurante: reservas, pedidos, cocina, facturación, compras, inventario y configuración de salas/mesas.",
+        goal: "Optimizar procesos operativos y mejorar la experiencia del cliente con control en tiempo real y trazabilidad."
+      },
+      p2: {
+        title: "Workflow de comisiones y cargos (Banco Nación)",
+        desc: "Aplicación interna para gestionar altas/actualizaciones de comisiones y cargos a partir de una presentación al comité: plantilla PPT, carga del PPT, validación por roles y publicación asistida.",
+        goal: "Estandarizar el proceso del comité y reducir errores/retrabajo con control Operador/Verificador y salida lista para publicar."
+      },
+      p3: {
+        title: "API de Facturación y Reportes",
+        desc: "Servicio backend para emitir comprobantes, consolidar ventas y exportar reportes para BI.",
+        goal: "Asegurar emisión confiable y reportes consistentes para decisiones de negocio."
+      }
+    };
+
+    // Helpers
+    function setTextAll(selector, value) {
+      document.querySelectorAll(selector).forEach(el => { el.textContent = value; });
+    }
+
+    function setHrefAll(selector, value) {
+      document.querySelectorAll(selector).forEach(el => { el.setAttribute('href', value); });
+    }
+
+    // Bind everything after DOM is ready (defensive)
+    window.addEventListener('DOMContentLoaded', () => {
+      document.title = `${PROFILE.name} — Portafolio`;
+
+      setTextAll('[data-bind="name"]', PROFILE.name);
+      setTextAll('[data-bind="role"]', PROFILE.role);
+      setTextAll('[data-bind="focus"]', PROFILE.focus);
+      setTextAll('[data-bind="location"]', PROFILE.location);
+      setTextAll('[data-bind="headline"]', PROFILE.headline);
+      setTextAll('[data-bind="summary"]', PROFILE.summary);
+      setTextAll('[data-bind="stack"]', PROFILE.stack);
+      setTextAll('[data-bind="priority"]', PROFILE.priority);
+      setTextAll('[data-bind="email"]', PROFILE.email);
+      setTextAll('[data-bind="linkedinText"]', PROFILE.linkedinText);
+      setTextAll('[data-bind="githubText"]', PROFILE.githubText);
+
+      setHrefAll('[data-bind="mailto"]', `mailto:${PROFILE.email}`);
+      setHrefAll('[data-bind="linkedin"]', PROFILE.linkedin);
+      setHrefAll('[data-bind="github"]', PROFILE.github);
+      setHrefAll('[data-bind="cv"]', PROFILE.cv);
+
+      // Bind projects
+      for (const key of Object.keys(PROJECTS)) {
+        const p = PROJECTS[key];
+        const titleEl = document.querySelector(`[data-proj-title="${key}"]`);
+        const descEl = document.querySelector(`[data-proj-desc="${key}"]`);
+        const goalEl = document.querySelector(`[data-proj-goal="${key}"]`);
+        if (titleEl) titleEl.textContent = p.title;
+        if (descEl) descEl.textContent = p.desc;
+        if (goalEl) goalEl.textContent = p.goal;
+      }
+
+      // Duplicate ticker content for seamless loop
+      const track = document.getElementById('techTrack');
+      if (track) track.innerHTML = track.innerHTML + track.innerHTML;
+
+      // Smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const id = a.getAttribute('href');
+          if (!id || id === '#') return;
+          const el = document.querySelector(id);
+          if (!el) return;
+          e.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      // Mini "tests" (non-blocking) to prevent future null crashes
+      console.assert(document.querySelector('[data-bind="name"]'), 'Missing [data-bind="name"]');
+      console.assert(document.getElementById('techTrack'), 'Missing #techTrack');
+      console.assert(document.getElementById('proyectos'), 'Missing #proyectos section');
+    });
+  </script>
+</body>
+</html>
